@@ -12,7 +12,7 @@
 
 // You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
- 
+
 
 // Example 1:
 
@@ -41,28 +41,39 @@
 //       this.next = null;
 //     }
 // }
+public class ListNode
+{
+    public int val;
+    public ListNode next;
+    public ListNode(int val = 0, ListNode next = null)
+    {
+        this.val = val;
+        this.next = next;
+    }
+}
 
-public class ListNode {
+public class Solution
+{
+    public static void Main(string[] args)
+    {
 
-  public int[] l1 = new int[] { 2,4,3 };
-  public int[] l2 = new int[] { 5,6,4 };
+        ListNode l1 = new ListNode(2, 4, 3);
+        ListNode l2 = new ListNode(5, 6, 4);
+        Console.WriteLine(AddTwoNumbers(l1, l2));
+    }
 
-  public ListNode(int[]l1, int[]l2) {
-    this.l1 = l1;
-    this.l2 = l2;
-  }
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2, int carry = 0)
+    {
+        if (l1 == null && l2 == null && carry == 0) return null;
+        if (l1 == null && l2 == null && carry == 1) return new ListNode(1);
 
-   public ListNode AddTwoNumbers(ListNode l1, ListNode l2,int carry = 0) {
-       if(l1 == null && l2 == null && carry == 0) return null; 
-       if(l1 == null && l2 == null && carry == 1) return new ListNode(1);
-       
         var s1 = l1 != null ? l1.val : 0;
         var s2 = l2 != null ? l2.val : 0;
-        
+
         var s = s1 + s2 + carry;
-        
+
         var sumNode = new ListNode(s % 10);
-        sumNode.next = AddTwoNumbers(l1?.next,l2?.next, s / 10 );
+        sumNode.next = AddTwoNumbers(l1?.next, l2?.next, s / 10);
         return sumNode;
     }
 
@@ -89,23 +100,25 @@ public class ListNode {
  */
 
 
-public class ListNode {
-      public int val;
-      public ListNode next;
-    public ListNode(int val=0, ListNode next=null) {
-         this.val = val;
-         this.next = next;
-     }
+public class ListNode
+{
+    public int val;
+    public ListNode next;
+    public ListNode(int val = 0, ListNode next = null)
+    {
+        this.val = val;
+        this.next = next;
+    }
 }
 public class Solution
 {
 
     public static void Main(string[] args)
     {
-		
-		ListNode<int[]> theArray1 = { 1, 2, 3}; //problem
-		ListNode<int[]> theArray2 = { 4, 5, 6};
-    Console.WriteLine(AddTwoNumbers(theArray1,theArray2));
+
+        ListNode<int[]> theArray1 = { 1, 2, 3 }; //problem
+        ListNode<int[]> theArray2 = { 4, 5, 6 };
+        Console.WriteLine(AddTwoNumbers(theArray1, theArray2));
     }
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
     {
@@ -125,7 +138,7 @@ public class Solution
                 sum += l2.val;
                 l2 = l2.next;
             }
-            result.next=new ListNode(sum % 10); //digit
+            result.next = new ListNode(sum % 10); //digit
             sum /= 10; //carry
             result = result.next;
         }
