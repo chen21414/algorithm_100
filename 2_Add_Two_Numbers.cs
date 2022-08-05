@@ -57,9 +57,15 @@ public class Solution
     public static void Main(string[] args)
     {
 
-        ListNode l1 = new ListNode(2, 4, 3);
+        //ListNode l1 = new ListNode(2, 4, 3);//can only take one argumant...
+        List<ListNode> l1 = new List<ListNode>();
+        l1.Add(new ListNode(2)); //not exactly working
+        l1.Add(new ListNode(4));
+        l1.Add(new ListNode(5));
+
         ListNode l2 = new ListNode(5, 6, 4);
-        Console.WriteLine(AddTwoNumbers(l1, l2));
+        var mySolution = new Solution();
+        Console.WriteLine(mySolution.AddTwoNumbers(l1, l2, 0));//or put a static before AddTwoNumbers
     }
 
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2, int carry = 0)
