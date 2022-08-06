@@ -34,12 +34,33 @@ var longestPalindrome = function (s) {
       function expandAroundCenter(left, right){
         while(left >= 0 && right < s.length && s[left] === s[right]){
           let subStr = s.substring(left, right + 1);
+         console.log('substr1', subStr)
           if(subStr.length > res.length){
             res = subStr;
           }
           left--;
           right++;
+         console.log('substr2', subStr)
         }
       }
       return res;
 };
+
+
+// "bab"
+// ☁️ "Running fiddle"
+// "substr1", "b"
+// "substr2", "b"
+// "substr1", "a"
+// "substr2", "a"
+// "substr1", "bab"
+// "substr2", "bab"
+// "substr1", "b"
+// "substr2", "b"
+// "substr1", "aba"
+// "substr2", "aba"
+// "substr1", "a"
+// "substr2", "a"
+// "substr1", "d"
+// "substr2", "d"
+// "bab"
