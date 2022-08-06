@@ -21,7 +21,7 @@ public class Solution
 {
     public double FindMedianSortedArrays(int[] nums1, int[] nums2)
     {
-        if (nums2.Length < nums1.Length)
+        if (nums2.Length < nums1.Length) //switching nums1 nums2
         {
             var temp = nums1;
             nums1 = nums2;

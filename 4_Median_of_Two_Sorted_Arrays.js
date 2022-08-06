@@ -24,20 +24,23 @@ var findMedianSortedArrays = function (nums1, nums2) {
   //swap if len1>len2
   if (len1 > len2) return findMedianSortedArrays(nums2, nums1);
 
+
+  //formula: partitionX + partitionY = (x.length + y.length + 1)/2
+
   //find high and low
   let lo = 0;
   let hi = len1; //2
 
   while (lo <= hi) {
     //find cut1 and cut2
-    let cut1 = Math.floor((lo + hi) / 2); //1
-    let cut2 = Math.floor((len1 + len2) / 2) - cut1; //1
+    let cut1 = Math.floor((lo + hi) / 2); //1, partition x
+    let cut2 = Math.floor((len1 + len2) / 2) - cut1; //1, partition y
 
     //find l1 , l2, r1, r2
     let l1 = cut1 === 0 ? Number.NEGATIVE_INFINITY : nums1[cut1 - 1]; //l1 = nums1[0] = 1
     let l2 = cut2 === 0 ? Number.NEGATIVE_INFINITY : nums2[cut2 - 1]; //l2 = nums2[0] = 3
-    let r1 = cut1 === len1 ? Number.MAX_VALUE : nums1[cut1]; //+infinite
-    let r2 = cut2 === len2 ? Number.MAX_VALUE : nums2[cut2]; //+infinite
+    let r1 = cut1 === len1 ? Number.MAX_VALUE : nums1[cut1]; //2
+    let r2 = cut2 === len2 ? Number.MAX_VALUE : nums2[cut2]; //4
 
     console.log("l1", l1); //1, 2
     console.log("l2", l2); //3, -Infinity
