@@ -61,60 +61,48 @@
 // The parsed integer is 4193.
 // Since 4193 is in the range [-231, 231 - 1], the final result is 4193.
 
-//#1 lazy and slower solution (but useful ins js)
-//https://leetcode.com/problems/string-to-integer-atoi/discuss/4671/Javascript-%22seriously%22-code
+public class Solution
+{
+    public int MyAtoi(string s)
+    {
+        // 1. Advance leading whitespace
+        var index = 0;
+        while (index < s.Length && char.IsWhiteSpace(s[index]))
+        {
+            ++index;
+        }
+        // In C#, Char.IsWhiteSpace() is a System.Char struct method 
+        // which is used to check whether a Unicode character is a whitespace or not. 
 
-var myAtoi = function (str) {
-  return Math.max(Math.min(parseInt(str) || 0, 2147483647), -2147483648);
-};
+        // 2. Determine if number is positive or negative
+        var sign = 1;
+        if (index < s.Length && (s[index] == '-' || s[index] == '+'))
+        {
+            if (s[index] == '-')
+            {
+                sign = -1;
+            }
+            ++index;
+        }
 
-//#2 regular and official solution
-// Observe there is no reference to built-in javascript methods parseInt and Number to convert the string to an integer, as this would defeat the purpose of the problem
-// I used a regex str[i].match(/[0-9]/) to check if a character is a number, that's just a preference
-// Updated Notes
-
-// 2021-09-22: A simple dictionary lookup might be a more exact solution to replace this line: const num = str[i] - '0' Thanks @TomCaserta
-// 2021-09-22: I'm not sure why the official solution was removed (at least I think there was an official solution)
-/**
- * @param {string} s
- * @return {number}
- */
-var myAtoi = function (str) {
-  let i = 0;
-  let sign = 1;
-  let result = 0;
-
-  //Discard whitespaces in the beginning
-  while (i < str.length && str[i] == " ") i++;
-
-  // Check if optional sign if it exists
-  if (i < str.length && (str[i] == "+" || str[i] == "-")) {
-    sign = str[i] == "-" ? -1 : 1;
-    i++;
-  }
-
-  const MAX_SAFE_32_INT = Math.pow(2, 31) - 1;
-  const MIN_SAFE_32_INT = -Math.pow(2, 31);
-
-  // Build the result and check for overflow/underflow condition
-  // Simply put, overflow and underflow happen when we assign a value that is out of range of the declared data type of the variable. If the (absolute) value is too big,
-  // we call it overflow, if the value is too small, we call it underflow.
-  while (i < str.length && str[i].match(/[0-9]/) != null) {
-    const num = str[i] - "0";
-    // the second condition of this statement was hard to understand, it
-    // handles the situation where we are reaching our 32-bit boundary limit, and we need to check the very last digit.
-    if (
-      result > Math.floor(MAX_SAFE_32_INT / 10) ||
-      (result === Math.floor(MAX_SAFE_32_INT / 10) &&
-        num > MAX_SAFE_32_INT % 10) //check the very last digit
-    ) {
-      return sign === 1 ? MAX_SAFE_32_INT : MIN_SAFE_32_INT;
+        // 3. Convert char digits to numeric value
+        var result = 0;
+        while (index < s.Length && char.IsDigit(s[index]))
+        {
+            var digit = CharToInt(s[index]);
+            // Check for overflow
+            if (result > (int.MaxValue - digit) / 10)
+            {
+                return sign == -1 ? int.MinValue : int.MaxValue;
+            }
+            result = (result * 10) + digit;
+            ++index;
+        }
+        return result * sign;
     }
 
-    // times 10 is a shift-left action
-    result = result * 10 + num;
-    i++;
-  }
-
-  return result * sign;
-};
+    private static int CharToInt(char ch)
+    {
+        return ch - '0';
+    }
+}
