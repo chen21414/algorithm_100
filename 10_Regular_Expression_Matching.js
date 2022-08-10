@@ -53,6 +53,7 @@ const isMatch = (string, pattern) => {
     // otherwise check hasFirstCharMatch. That's because if we want to proceed with the current pattern, we must be sure that the current pattern char matches the char
     // If hasFirstCharMatch is true, then do the recursion with next char and current pattern (s+1, p).  That's because current char matches the pattern char.
     return (
+      // pattern.slice(2) is """" two empty string
       isMatch(string, pattern.slice(2)) ||
       (hasFirstCharMatch && isMatch(string.slice(1), pattern))
     );
@@ -63,3 +64,15 @@ const isMatch = (string, pattern) => {
   // if so, then can proceed with next string and pattern chars (s+1, p+1)
   return hasFirstCharMatch ? isMatch(string.slice(1), pattern.slice(1)) : false;
 };
+
+// console.log(pattern)
+// ""
+// ""
+// ""
+// true
+
+// console.log(string)
+// "aa"
+// "a"
+// ""
+// true
