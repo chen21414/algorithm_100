@@ -33,7 +33,7 @@
 // Explanation: ".*" means "zero or more (*) of any character (.)".
 
 //https://leetcode.com/problems/regular-expression-matching/discuss/618936/C-faster-than-98.65-less-than-25.00-Mem-O(S*P)
- 
+
 // Runtime: 68 ms
 // Memory Usage: 24.4 MB
 
@@ -45,7 +45,7 @@
 // This is a boolean array, where s[i][j] will store whether it’s possible to generate string s[0..i] using pattern p[0..j]. I am filling this DP array in a bottom-up manner.
 
 // The first row and first column of the DP will correspond to the empty input string and empty pattern string respectively. You can fill the first row and first column of the boolean DP array using the base conditions explained above.
- 
+
 //  bool array
 //  bool[] arr = new bool[5];
 //       arr[0] = true;
@@ -53,41 +53,46 @@
 //       arr[2] = false;
 //       arr[3] = true;
 //       arr[4] = true;
- 
+
 
 //youtube:
 //https://www.youtube.com/watch?v=l3hda49XcDE
- public class Solution
+//https://www.youtube.com/watch?v=qza1UKNHAys
+//25:00
+public class Solution
 {
 
-   public static void Main(string[] args)
+    public static void Main(string[] args)
     {
         Solution solution = new Solution();
         Console.WriteLine(solution.IsMatch("ab", ".*"));
     }
- public bool IsMatch(string s, string p) {
+    public bool IsMatch(string s, string p)
+    {
         //Console.WriteLine(p.Length); //2
-        bool[,] dp = new bool[p.Length+1, s.Length+1];
-        dp[0,0] = true;
-        
-        for(int i=0, x=1; i < p.Length; i++, x++)
+        bool[,] dp = new bool[p.Length + 1, s.Length + 1];
+        dp[0, 0] = true;
+
+        for (int i = 0, x = 1; i < p.Length; i++, x++)
         {
-            if (p[i] == '*') { dp[x,0] = dp[x-2, 0]; }
-            //Console.WriteLine("dp[x,0]" + dp[x,0]); //dp[x,0]False, p[x,0]True
-            
-            for(int j=0, y=1; j < s.Length; j++, y++)
+            //when abc -> abca*, abc = abc, * times 0
+            //actually when happen in first line
+            if (p[i] == '*') { dp[x, 0] = dp[x - 2, 0]; }
+
+            for (int j = 0, y = 1; j < s.Length; j++, y++)
             {
                 if (p[i] == '*')
                 {
-                    dp[x,y] = dp[x-1,y] || dp[x-2, y] || (dp[x, y-1] && (p[i-1] == s[j] || p[i-1] == '.'));
+                    //when p[i - 1] == s[j] || == '.', ab->ab.*, abc->abc*, abccc -> abc*
+                    dp[x, y] = dp[x - 1, y] || dp[x - 2, y] || (dp[x, y - 1] && (p[i - 1] == s[j] || p[i - 1] == '.'));
                 }
-                else  if (p[i] == s[j] || p[i] == '.')
+                else if (p[i] == s[j] || p[i] == '.')
                 {
-                     dp[x,y] = dp[x-1, y-1];
+                    dp[x, y] = dp[x - 1, y - 1];
                 }
             }
         }
-        
+
         return dp[p.Length, s.Length];
     }
 }
