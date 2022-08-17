@@ -37,14 +37,74 @@ const maxArea = (height) => {
 		right = height.length - 1;
 
 	while (left < right) {
+    console.log('height[left]', height[left])
+    console.log('height[right]', height[right])
+
 		let smallestSide = Math.min(height[left], height[right]);
+    console.log('smallestSide', smallestSide)
+
 		let area = (right - left) * smallestSide;
+    console.log('area', area)
 
 		if (area > result) result = area;
 
 		if (height[left] < height[right]) left++;
 		else right--;
+    console.log('left', left)
+    console.log('right', right)
 	}
 
 	return result;
 };
+
+
+// "left", 1
+// "right", 8
+// "left", 1
+// "right", 7
+// "left", 1
+// "right", 6
+// "left", 1
+// "right", 5
+// "left", 1
+// "right", 4
+// "left", 1
+// "right", 3
+// "left", 1
+// "right", 2
+// "left", 1
+// "right", 1
+
+
+// "height[left]", 1
+// "height[right]", 7
+// "smallestSide", 1
+// "area", 8
+// "height[left]", 8
+// "height[right]", 7
+// "smallestSide", 7
+// "area", 49
+// "height[left]", 8
+// "height[right]", 3
+// "smallestSide", 3
+// "area", 18
+// "height[left]", 8
+// "height[right]", 8
+// "smallestSide", 8
+// "area", 40
+// "height[left]", 8
+// "height[right]", 4
+// "smallestSide", 4
+// "area", 16
+// "height[left]", 8
+// "height[right]", 5
+// "smallestSide", 5
+// "area", 15
+// "height[left]", 8
+// "height[right]", 2
+// "smallestSide", 2
+// "area", 4
+// "height[left]", 8
+// "height[right]", 6
+// "smallestSide", 6
+// "area", 6
